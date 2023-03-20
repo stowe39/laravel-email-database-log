@@ -50,7 +50,7 @@ To publish config file run this in terminal:
 php artisan vendor:publish --provider="Dmcbrn\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider"
 ```
 
-Config contains three parameters:
+Config contains following parameters:
 
 ```php
 //name of the disk where the attachments will be saved
@@ -69,6 +69,15 @@ Config contains three parameters:
 
 //this parameter prefixes the routes for listing of logged emails using API routes
 'routes_prefix_api' => env('EMAIL_LOG_ROUTES_PREFIX_API',''),
+
+//custom route prefix for webhooks
+'routes_webhook_prefix' => env('EMAIL_LOG_ROUTES_WEBHOOK_PREFIX', env('EMAIL_LOG_ROUTES_PREFIX','')),
+
+//mailgun secret and whether to ommit events for emails which were not found
+'mailgun' => [
+    'secret' => env('MAILGUN_SECRET', null),
+    'filter_unknown_emails' => env('EMAIL_LOG_MAILGUN_FILTER_UNKNOWN_EMAILS', true),
+],
 ```
 
 # Usage

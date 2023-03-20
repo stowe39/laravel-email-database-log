@@ -30,7 +30,7 @@ class EmailLogController extends Controller {
     public function show(int $id)
     {
         //get email
-        $email = $this->getEmail($id);
+        $email = $this->getEmail($id, false);
 
         //return
         return view('email-logger::show', compact('email'));
@@ -97,7 +97,7 @@ class EmailLogController extends Controller {
         return response()->json(compact('message'), 200);
     }
 
-    private function getEmail(int $id)
+    private function getEmail(int $id, bool $isApi)
     {
         //get email
         $email = EmailLog::with('events')

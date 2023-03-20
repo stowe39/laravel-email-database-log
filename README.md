@@ -55,10 +55,20 @@ Config contains three parameters:
 ```php
 //name of the disk where the attachments will be saved
 'disk' => env('EMAIL_LOG_DISK','email_log_attachments'),
-//to prevent access to list of logged emails add a middlewares. Multiple middlewares can be used (separate by comma)
+
+//to prevent access to list of logged emails through WEB routes add a middlewares
+//multiple middlewares can be used (separate by comma)
 'access_middleware' => env('EMAIL_LOG_ACCESS_MIDDLEWARE',null),
-//this parameter prefixes the routes for listing of logged emails
+
+//to prevent access to list of logged emails through API routes add a middlewares
+//multiple middlewares can be used (separate by comma)
+'access_middleware_api' => env('EMAIL_LOG_ACCESS_MIDDLEWARE_API',null),
+
+//this parameter prefixes the routes for listing of logged emails using WEB routes
 'routes_prefix' => env('EMAIL_LOG_ROUTES_PREFIX',''),
+
+//this parameter prefixes the routes for listing of logged emails using API routes
+'routes_prefix_api' => env('EMAIL_LOG_ROUTES_PREFIX_API',''),
 ```
 
 # Usage
@@ -118,6 +128,37 @@ for all of the events. If you used a `prefix` in the config file then this shoul
 ```
 https://example.com/your-prefix/email-log/webhooks/event
 ```
+
+## Upgrade from 5.2.2 to 5.3.0 - API ENDPOINTS AVAILABLE, BREAKING CHANGE
+
+API ENDPOINTS AVAILABLE:
+
+New routes with JSON responses:
+```
+https://example.com/api/your-prefix/email-log
+https://example.com/api/your-prefix/email-log/{id}
+https://example.com/api/your-prefix/email-log/{id}/attachment/{attachment}
+https://example.com/api/your-prefix/email-log/delete
+```
+
+BREAKING CHANGE:
+
+The logic for presentation of attachments (on single email view: `show.blade.php`) has been moved to backend. If you are not using the default `show.blade.php` and are displaying list of attachments you should reflect these changes in your code. Namely, you no need to check if the file exists or add the attachment to the route to access it. Instead the returned data will be array with of following formats (depending if file can be found on disk or not):
+
+```
+//file can be found
+[
+    'name' => 'filename.pdf',
+    'route' => 'https://example.com/api/email-log/email-id/attachment/attachment-key',
+]
+//file can't be found
+[
+    'name' => 'filename.pdf',
+    'message' => 'file not found',
+]
+```
+
+Note following: `/api` part will be dropped in html response, `email-id` is the `id` of the email, `attachment-key` is the order of attachment starting at `0`.
 
 ## Upgrade from 5.1.0 to 5.2.0 - BREAKING CHANGE
 

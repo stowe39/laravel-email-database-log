@@ -16,17 +16,14 @@
                 <div>{!! $email->body !!}</div>
             </li>
             <li>Attachments:
-                @if(count($attachmentsArray = array_filter(explode(', ',$email->attachments))) > 0)
+                @if(count($email->attachments))
                     <ul>
-                        @foreach($attachmentsArray as $key => $attachment)
+                        @foreach($email->attachments as $attachment)
                             <li>
-                                @if(Illuminate\Support\Facades\Storage::disk(config('email_log.disk'))->exists($attachment))
-                                    <a href="{{ route('email-log.fetch-attachment', [
-                                        'id' => $email->id,
-                                        'attachment' => $key,
-                                    ]) }}">{{ basename($attachment) }}</a>
+                                @if(array_key_exists('route', $attachment))
+                                    <a href="{{ $attachment['route'] }}">{{ $attachment['name'] }}</a>
                                 @else
-                                    <a href="#!" style="cursor: not-allowed;">{{ basename($attachment) }} - File Not Found</a>
+                                    {{ $attachment['name'] }} - {{ $attachment['message'] }}
                                 @endif
                             </li>
                         @endforeach

@@ -1,11 +1,11 @@
 <?php
 
-namespace Dmcbrn\LaravelEmailDatabaseLog;
+namespace Yhw\LaravelEmailDatabaseLog;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Dmcbrn\LaravelEmailDatabaseLog\Events\EventFactory;
+use Yhw\LaravelEmailDatabaseLog\Events\EventFactory;
 
 class EmailLogController extends Controller {
 

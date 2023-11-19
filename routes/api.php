@@ -11,28 +11,28 @@ Route::group([
         '/email-log',
         [
             'as' => 'api.email-log',
-            'uses' => 'Dmcbrn\LaravelEmailDatabaseLog\EmailLogController@indexApi',
+            'uses' => 'Yhw\LaravelEmailDatabaseLog\EmailLogController@indexApi',
         ]
     );
     Route::post(
         '/email-log/delete',
         [
             'as' => 'api.email-log.delete-old',
-            'uses' => 'Dmcbrn\LaravelEmailDatabaseLog\EmailLogController@deleteOldEmailsApi',
+            'uses' => 'Yhw\LaravelEmailDatabaseLog\EmailLogController@deleteOldEmailsApi',
         ]
     );
     Route::get(
         '/email-log/{id}/attachment/{attachment}',
         [
             'as' => 'api.email-log.fetch-attachment',
-            'uses' => 'Dmcbrn\LaravelEmailDatabaseLog\EmailLogController@fetchAttachment',
+            'uses' => 'Yhw\LaravelEmailDatabaseLog\EmailLogController@fetchAttachment',
         ]
     );
     Route::get(
         '/email-log/{id}',
          [
             'as' => 'api.email-log.show',
-            'uses' => 'Dmcbrn\LaravelEmailDatabaseLog\EmailLogController@showApi',
+            'uses' => 'Yhw\LaravelEmailDatabaseLog\EmailLogController@showApi',
         ]
     );
 });

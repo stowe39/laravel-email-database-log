@@ -1,5 +1,5 @@
 {
-    "name": "dmcbrn/laravel-email-database-log",
+    "name": "yhw/laravel-email-database-log",
     "description": "A simple database logger for all outgoing emails sent by Laravel website - built from shvetsgroup/laravel-email-database-log.",
     "keywords": ["laravel", "markdown"],
     "license": "MIT",
@@ -18,13 +18,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Dmcbrn\\LaravelEmailDatabaseLog\\": "src/"
+            "Yhw\\LaravelEmailDatabaseLog\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Dmcbrn\\LaravelEmailDatabaseLog\\LaravelEmailDatabaseLogServiceProvider"
+                "Yhw\\LaravelEmailDatabaseLog\\LaravelEmailDatabaseLogServiceProvider"
             ]
         }
     }

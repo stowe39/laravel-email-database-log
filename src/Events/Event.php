@@ -1,9 +1,9 @@
 <?php
 
-namespace Dmcbrn\LaravelEmailDatabaseLog\Events;
+namespace Yhw\LaravelEmailDatabaseLog\Events;
 
-use Dmcbrn\LaravelEmailDatabaseLog\EmailLog;
-use Dmcbrn\LaravelEmailDatabaseLog\Events\Interfaces\EventInterface;
+use Yhw\LaravelEmailDatabaseLog\EmailLog;
+use Yhw\LaravelEmailDatabaseLog\Events\Interfaces\EventInterface;
 
 abstract class Event implements EventInterface
 {

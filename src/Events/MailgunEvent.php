@@ -1,9 +1,9 @@
 <?php
 
-namespace Dmcbrn\LaravelEmailDatabaseLog\Events;
+namespace Yhw\LaravelEmailDatabaseLog\Events;
 
 use Illuminate\Http\Request;
-use Dmcbrn\LaravelEmailDatabaseLog\EmailLogEvent;
+use Yhw\LaravelEmailDatabaseLog\EmailLogEvent;
 
 class MailgunEvent extends Event
 {

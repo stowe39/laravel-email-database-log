@@ -1,10 +1,10 @@
 <?php
 
-namespace Dmcbrn\LaravelEmailDatabaseLog;
+namespace Yhw\LaravelEmailDatabaseLog;
 
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Support\Facades\Storage;
-use Dmcbrn\LaravelEmailDatabaseLog\LaravelEvents\EmailLogged;
+use Yhw\LaravelEmailDatabaseLog\LaravelEvents\EmailLogged;
 
 class EmailLogger
 {

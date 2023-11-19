@@ -1,6 +1,6 @@
 <?php
 
-namespace Dmcbrn\LaravelEmailDatabaseLog;
+namespace Yhw\LaravelEmailDatabaseLog;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -55,6 +55,6 @@ class EmailLog extends Model
      */
     public function events()
     {
-        return $this->hasMany('Dmcbrn\LaravelEmailDatabaseLog\EmailLogEvent','messageId','messageId');
+        return $this->hasMany('Yhw\LaravelEmailDatabaseLog\EmailLogEvent','messageId','messageId');
     }
 }

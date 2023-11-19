@@ -11,28 +11,28 @@ Route::group([
         '/email-log',
         [
             'as' => 'email-log',
-            'uses' => 'Dmcbrn\LaravelEmailDatabaseLog\EmailLogController@index',
+            'uses' => 'Yhw\LaravelEmailDatabaseLog\EmailLogController@index',
         ]
     );
     Route::post(
         '/email-log/delete',
         [
             'as' => 'email-log.delete-old',
-            'uses' => 'Dmcbrn\LaravelEmailDatabaseLog\EmailLogController@deleteOldEmails',
+            'uses' => 'Yhw\LaravelEmailDatabaseLog\EmailLogController@deleteOldEmails',
         ]
     );
     Route::get(
         '/email-log/{id}/attachment/{attachment}',
         [
             'as' => 'email-log.fetch-attachment',
-            'uses' => 'Dmcbrn\LaravelEmailDatabaseLog\EmailLogController@fetchAttachment',
+            'uses' => 'Yhw\LaravelEmailDatabaseLog\EmailLogController@fetchAttachment',
         ]
     );
     Route::get(
         '/email-log/{id}',
          [
             'as' => 'email-log.show',
-            'uses' => 'Dmcbrn\LaravelEmailDatabaseLog\EmailLogController@show',
+            'uses' => 'Yhw\LaravelEmailDatabaseLog\EmailLogController@show',
         ]
     );
 });
@@ -45,7 +45,7 @@ Route::group([
         '/email-log/webhooks/event',
         [
             'as' => 'email-log.webhooks',
-            'uses' => 'Dmcbrn\LaravelEmailDatabaseLog\EmailLogController@createEvent',
+            'uses' => 'Yhw\LaravelEmailDatabaseLog\EmailLogController@createEvent',
         ]
     );
 });

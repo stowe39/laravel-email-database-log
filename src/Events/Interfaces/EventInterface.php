@@ -1,6 +1,6 @@
 <?php
 
-namespace Dmcbrn\LaravelEmailDatabaseLog\Events\Interfaces;
+namespace Yhw\LaravelEmailDatabaseLog\Events\Interfaces;
 
 use Illuminate\Http\Request;
 

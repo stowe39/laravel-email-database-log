@@ -1,7 +1,7 @@
 <?php
 
-namespace Dmcbrn\LaravelEmailDatabaseLog\Events;
-use Dmcbrn\LaravelEmailDatabaseLog\Events\MailgunEvent;
+namespace Yhw\LaravelEmailDatabaseLog\Events;
+use Yhw\LaravelEmailDatabaseLog\Events\MailgunEvent;
 
 class EventFactory
 {

@@ -20,7 +20,7 @@ Version 5.1 is using Filesystems which is a breaking change from 5.3. See below 
 Laravel Email Database Log can be installed via [composer](http://getcomposer.org) by running this line in terminal:
 
 ```bash
-composer require dmcbrn/laravel-email-database-log
+composer require yhw/laravel-email-database-log
 ```
 
 ## Step 2: Configuration
@@ -30,7 +30,7 @@ You can skip this step if your version of Laravel is 5.5 or above. Otherwise, yo
 ```php
 'providers' => [
     // ...
-    Dmcbrn\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider::class,
+    Yhw\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider::class,
 ],
 ```
 
@@ -47,7 +47,7 @@ php artisan migrate
 To publish config file run this in terminal:
 
 ```bash
-php artisan vendor:publish --provider="Dmcbrn\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider"
+php artisan vendor:publish --provider="Yhw\LaravelEmailDatabaseLog\LaravelEmailDatabaseLogServiceProvider"
 ```
 
 Config contains following parameters:
@@ -95,7 +95,7 @@ You also need to add the following disk in the `config/filesystems.php` file:
 ],
 ```
 
-If you want to process the logged email or save/format some additional data on your system you can hook up to the `Dmcbrn\LaravelEmailDatabaseLog\LaravelEvents\EmailLogged` event via a Laravel listener:
+If you want to process the logged email or save/format some additional data on your system you can hook up to the `Yhw\LaravelEmailDatabaseLog\LaravelEvents\EmailLogged` event via a Laravel listener:
 
 https://laravel.com/docs/5.5/events#defining-listeners
 
@@ -219,7 +219,7 @@ You will also need to drop the current prefix from the `email_log.attachments` c
 You can run following code using `php artisan tinker` to fix these issues. Depending on the amount of data, it could take some time to finish:
 
 ```
-$log = Dmcbrn\LaravelEmailDatabaseLog\EmailLog::where('attachments','!=', null)
+$log = Yhw\LaravelEmailDatabaseLog\EmailLog::where('attachments','!=', null)
 $log->count()
 $log->chunk(100, function($chunk) { foreach($chunk as $l) { $l->attachments = str_replace('email_log_attachments/', '', $l->attachments); $l->save(); } })
 

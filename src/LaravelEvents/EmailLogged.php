@@ -1,9 +1,9 @@
 <?php
 
-namespace Dmcbrn\LaravelEmailDatabaseLog\LaravelEvents;
+namespace Yhw\LaravelEmailDatabaseLog\LaravelEvents;
 
 use Illuminate\Queue\SerializesModels;
-use Dmcbrn\LaravelEmailDatabaseLog\EmailLog;
+use Yhw\LaravelEmailDatabaseLog\EmailLog;
 
 class EmailLogged
 {
@@ -14,7 +14,7 @@ class EmailLogged
     /**
      * Create a new event instance.
      *
-     * @param  Dmcbrn\LaravelEmailDatabaseLog\EmailLog  $emailLog
+     * @param  Yhw\LaravelEmailDatabaseLog\EmailLog  $emailLog
      * @return void
      */
     public function __construct(EmailLog $emailLog)

@@ -14,7 +14,7 @@ class AddMessageIdColumn extends Migration
     public function up()
     {
         Schema::table('email_log', function (Blueprint $table) {
-            $table->string('messageId', 32)->nullable()->default(null);
+            $table->string('messageId', 42)->nullable()->default(null);
             $table->index('messageId');
         });
     }

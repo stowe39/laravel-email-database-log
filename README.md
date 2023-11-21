@@ -13,6 +13,23 @@ For Laravel 8 - use 5.* versions
 
 Version 5.1 is using Filesystems which is a breaking change from 5.3. See below for upgrade information.
 
+# Custom Templates
+
+To make the email log integrate better with your laravel theme, set the path to your blade files, using the
+EMAIL_LOG_CUSTOM_TEMPLATE option, in your .env file.
+
+The blade files I use are in the custom_templates folder.
+
+In my project they are in resources\views\admin\templates\email_logger\
+
+and my .env file has the lines:
+
+```php
+EMAIL_LOG_ACCESS_MIDDLEWARE="admin"
+EMAIL_LOG_ROUTES_PREFIX="admin"
+EMAIL_LOG_CUSTOM_TEMPLATE="admin.templates.email_logger.email-logger"
+```
+
 # Installation
 
 ## Step 1: Composer
@@ -55,6 +72,9 @@ Config contains following parameters:
 ```php
 //name of the disk where the attachments will be saved
 'disk' => env('EMAIL_LOG_DISK','email_log_attachments'),
+
+//template override
+'custom_template' => env('EMAIL_LOG_CUSTOM_TEMPLATE',null),
 
 //to prevent access to list of logged emails through WEB routes add a middlewares
 //multiple middlewares can be used (separate by comma)
@@ -105,13 +125,13 @@ https://laravel.com/docs/5.5/events#registering-events-and-listeners
 
 If you're using Laravel >=5.8.9 you can use `Event Discovery` instead:
 
-https://laravel.com/docs/5.8/events#registering-events-and-listeners 
+https://laravel.com/docs/5.8/events#registering-events-and-listeners
 
 If using queues on your server you will need to restart the worker for the library to work:
 
 ```
-Remember, queue workers are long-lived processes and store the booted application state in memory. 
-As a result, they will not notice changes in your code base after they have been started. 
+Remember, queue workers are long-lived processes and store the booted application state in memory.
+As a result, they will not notice changes in your code base after they have been started.
 So, during your deployment process, be sure to restart your queue workers.
 
 
@@ -202,7 +222,7 @@ to
 'disk' => env('EMAIL_LOG_DISK','email_log_attachments'),
 ```
 
-In `config/filesystems.php` add 
+In `config/filesystems.php` add
 
 
 ```

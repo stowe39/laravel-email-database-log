@@ -15,7 +15,12 @@ class EmailLogController extends Controller {
         list($emails, $filterEmail, $filterSubject) = $this->getEmailsForListing($request);
 
         //return
-        return view('email-logger::index', compact('emails','filterEmail','filterSubject'));
+        if(view()->exists(config('email_log.custom_template'))){
+           return view(config('email_log.custom_template'), compact('emails','filterEmail','filterSubject'));
+        }
+        else {
+          return view('email-logger::index', compact('emails','filterEmail','filterSubject'));
+        }
     }
 
     public function indexApi(Request $request)
@@ -33,7 +38,12 @@ class EmailLogController extends Controller {
         $email = $this->getEmail($id, false);
 
         //return
-        return view('email-logger::show', compact('email'));
+        if(view()->exists(config('email_log.custom_template'))){
+           return view(config('email_log.custom_template'), compact('email'));
+        }
+        else {
+          return view('email-logger::show', compact('email'));
+        }
     }
 
     public function showApi(int $id)
@@ -77,7 +87,7 @@ class EmailLogController extends Controller {
         //save event
         return $event->saveEvent($request);
     }
-    
+
     public function deleteOldEmails(Request $request)
     {
         //delete old emails
@@ -87,7 +97,7 @@ class EmailLogController extends Controller {
         return redirect(route('email-log'))
             ->with('status', $message);
     }
-    
+
     public function deleteOldEmailsApi(Request $request)
     {
         //delete old emails
@@ -114,7 +124,7 @@ class EmailLogController extends Controller {
                 //update each attachment's value depending if file can be found on disk
                 $fileName = basename($attachment);
                 if(Storage::disk(config('email_log.disk'))->exists($attachment)) {
-                    $route = $isApi 
+                    $route = $isApi
                         ? 'api.email-log.fetch-attachment'
                         : 'email-log.fetch-attachment';
                     $formattedAttachment = [
@@ -158,7 +168,7 @@ class EmailLogController extends Controller {
                     $q->select('messageId','created_at','event');
                 }
             ])
-            ->select('id','messageId','date','from','to','subject')
+            ->select('id','messageId','date','from','to','subject','attachments')
             ->when($filterEmail, function($q) use($filterEmail) {
                 return $q->where('to','like','%'.$filterEmail.'%');
             })
@@ -189,7 +199,7 @@ class EmailLogController extends Controller {
             Storage::disk(config('email_log.disk'))
                 ->deleteDirectory($email->messageId);
         }
-        
+
         //delete emails
         $numberOfDeletedEmails = EmailLog::destroy($emails->pluck('id'));
 

@@ -1,4 +1,4 @@
-<?php
+?php
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -20,9 +20,9 @@ class EmailLog extends Migration
             $table->string('cc')->nullable();
             $table->string('bcc')->nullable();
             $table->string('subject');
-            $table->text('body');
+            $table->longText('body');
             $table->text('headers')->nullable();
-            $table->text('attachments')->nullable();
+            $table->longText('attachments')->nullable();
         });
     }
 

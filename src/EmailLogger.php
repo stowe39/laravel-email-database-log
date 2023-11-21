@@ -3,8 +3,10 @@
 namespace Yhw\LaravelEmailDatabaseLog;
 
 use Illuminate\Mail\Events\MessageSending;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Yhw\LaravelEmailDatabaseLog\LaravelEvents\EmailLogged;
+use Symfony\Component\Mime\Email;
 
 class EmailLogger
 {
@@ -17,17 +19,14 @@ class EmailLogger
     {
         $message = $event->message;
 
-        $messageId = strtok($message->getId(), '@');
+        $messageId = Str::uuid();
 
         $attachments = [];
-        foreach ($message->getChildren() as $child) {
-            //docs for this below: http://phpdox.de/demo/Symfony2/classes/Swift_Mime_SimpleMimeEntity/getChildren.xhtml
-            if(in_array(get_class($child),['Swift_EmbeddedFile','Swift_Attachment'])) {
-                $attachmentPath = $messageId . '/' . $child->getFilename();
-                Storage::disk(config('email_log.disk'))->put($attachmentPath, $child->getBody());
-                $attachments[] = $attachmentPath;
-            }
-        }
+        foreach ($message->getAttachments() as $dataPart) {
+            $attachmentPath = $messageId . '/' . $dataPart->getFilename();
+            Storage::disk(config('email_log.disk'))->put($attachmentPath, $dataPart->getBody());
+            $attachments[] = $attachmentPath;
+		}
 
         $emailLog = EmailLog::create([
             'date' => date('Y-m-d H:i:s'),
@@ -36,8 +35,8 @@ class EmailLogger
             'cc' => $this->formatAddressField($message, 'Cc'),
             'bcc' => $this->formatAddressField($message, 'Bcc'),
             'subject' => $message->getSubject(),
-            'body' => $message->getBody(),
-            'headers' => (string)$message->getHeaders(),
+            'body' => $message->getHtmlBody() ?? $message->getTextBody(),
+            'headers' => $message->getHeaders()->toString(),
             'attachments' => empty($attachments) ? null : implode(', ', $attachments),
             'messageId' => $messageId,
             'mail_driver' => config('mail.driver'),
@@ -49,28 +48,14 @@ class EmailLogger
     /**
      * Format address strings for sender, to, cc, bcc.
      *
-     * @param $message
-     * @param $field
+     * @param Email $message
+     * @param string $field
      * @return null|string
      */
-    function formatAddressField($message, $field)
+    function formatAddressField(Email $message, string $field): ?string
     {
         $headers = $message->getHeaders();
 
-        if (!$headers->has($field)) {
-            return null;
-        }
-
-        $mailboxes = $headers->get($field)->getFieldBodyModel();
-
-        $strings = [];
-        foreach ($mailboxes as $email => $name) {
-            $mailboxStr = $email;
-            if (null !== $name) {
-                $mailboxStr = $name . ' <' . $mailboxStr . '>';
-            }
-            $strings[] = $mailboxStr;
-        }
-        return implode(', ', $strings);
+        return $headers->get($field)?->getBodyAsString();
     }
 }

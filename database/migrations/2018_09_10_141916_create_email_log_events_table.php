@@ -16,7 +16,7 @@ class CreateEmailLogEventsTable extends Migration
         Schema::create('email_log_events', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('messageId', 32);
+            $table->string('messageId', 42);
             $table->string('event');
             $table->text('data');
         });
